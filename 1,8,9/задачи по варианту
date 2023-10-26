@@ -1,0 +1,130 @@
+#1
+import psutil
+import os
+import time
+start=time.time()
+process= psutil.Process(os.getpid())
+
+f = open('input.txt')
+n = int(f.readline())
+s = list(map(int,f.readline().split()))
+def quicksort_triple_partition(s):
+    if len(s) <= 1:
+        return s
+
+    pivot = s[len(s)//2]  # выбор опорного элемента
+    less, equal, greater = [], [], []
+
+    for element in s:
+        if element < pivot:
+            less.append(element)
+        elif element > pivot:
+            greater.append(element)
+        else:
+            equal.append(element)
+
+    return quicksort_triple_partition(less) + equal + quicksort_triple_partition(greater)
+
+sorted_numbers = quicksort_triple_partition(s)
+d=open('output.txt','w')
+d.write(str(sorted_numbers))
+d.close()
+
+print(f'Время выолнения:{time.time()-start}')
+print(f'Затраты памяти:',process.memory_info().rss/(1024*1024),'Мбайт')
+
+#8
+import psutil
+import os
+import time
+import math
+start=time.time()
+process= psutil.Process(os.getpid())
+
+f = open('input.txt')
+n = f.readline().split()
+n1, kol = int(n[0]), int(n[1])
+a = []
+a_2 = []
+while True:
+    s = f.readline().split()
+    if not s:
+        break
+    number_1, number_2 = int(s[0]), int(s[1])
+    sqrt = int(math.sqrt(number_1**2 + number_2**2))
+    a.append(sqrt)
+    a_2.append(s)
+
+def quicksort_triple_partition(a):
+    if len(a) <= 1:
+        return a
+    pivot = a[len(a) // 2]  # выбор опорного элемента
+    less, equal, greater = [], [], []
+    for element in a:
+        if element < pivot:
+            less.append(element)
+        elif element > pivot:
+            greater.append(element)
+        else:
+            equal.append(element)
+    return quicksort_triple_partition(less) + equal + quicksort_triple_partition(greater)
+
+sorted_numbers = quicksort_triple_partition(a)
+sorted_numbers = sorted_numbers[:kol]
+a_1 = []
+for i in sorted_numbers:
+    for j in range(len(a)):
+        for j in range(len(a_2)):
+            if a[j] == i and a_2[j] not in a_1:
+                a_1.append(a_2[j])
+
+d=open('output.txt','w')
+d.write(str(a_1))
+d.close()
+
+print(f'Время выолнения:{time.time()-start}')
+print(f'Затраты памяти:',process.memory_info().rss/(1024*1024),'Мбайт')
+
+#9
+import psutil
+import os
+import time
+import math
+start=time.time()
+process= psutil.Process(os.getpid())
+
+f = open('input.txt')
+n = f.readline().split()
+a = []
+a_1 = []
+while True:
+    s = f.readline().split()
+    if not s:
+        break
+    a.append(s)
+for i in range(0, len(a)):
+    for j in range(i+1, len(a)):
+        distance = math.sqrt((int(a[j][0]) - int(a[i][0])) ** 2 + (int(a[j][1]) - int(a[i][1])) ** 2)
+        a_1.append(distance)
+def quicksort_triple_partition(a_1):
+    if len(a_1) <= 1:
+        return a_1
+    pivot = a_1[len(a_1)//2]  # выбор опорного элемента
+    less, equal, greater = [], [], []
+
+    for element in a_1:
+        if element < pivot:
+            less.append(element)
+        elif element > pivot:
+            greater.append(element)
+        else:
+            equal.append(element)
+    return quicksort_triple_partition(less) + equal + quicksort_triple_partition(greater)
+sorted_numbers = quicksort_triple_partition(a_1)
+min = min(sorted_numbers)
+d = open('output.txt','w')
+d.write(str("{0:.4f}".format(min)))
+d.close()
+
+print(f'Время выолнения:{time.time()-start}')
+print(f'Затраты памяти:',process.memory_info().rss/(1024*1024),'Мбайт')
