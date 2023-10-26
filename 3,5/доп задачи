@@ -1,0 +1,76 @@
+#3
+import psutil
+import os
+import time
+start=time.time()
+process= psutil.Process(os.getpid())
+
+f = open('input.txt')
+n, k = map(int, f.readline().split())
+dolls = list(map(int, f.readline().strip().split()))
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    p = arr[len(arr) // 2]
+    left = [x for x in arr if x < p]
+    middle = [x for x in arr if x == p]
+    right = [x for x in arr if x > p]
+    return quick_sort(left) + middle + quick_sort(right)
+
+def check(n, k, dolls):
+    pugalo = quick_sort(dolls)
+    for i in range(n - k):
+        if pugalo[i] > pugalo[i + k]:
+            return False
+    return True
+# Проверка сортировки и запись результата
+if check(n, k, dolls):
+    result = 'ДА'
+else:
+    result = 'НЕТ'
+print(result)
+d = open('output.txt', 'w')
+d.write(result)
+d.close()
+
+print(f'Время выолнения:{time.time()-start}')
+print(f'Затраты памяти:',process.memory_info().rss/(1024*1024),'Мбайт')
+
+#5
+import psutil
+import os
+import time
+start=time.time()
+process= psutil.Process(os.getpid())
+
+f = open('input.txt')
+citations = list(map(int,f.readline().strip().split(',')))
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    p = arr[len(arr) // 2]
+    left = [x for x in arr if x < p]
+    middle = [x for x in arr if x == p]
+    right = [x for x in arr if x > p]
+    return quicksort(left) + middle + quicksort(right)
+
+# Функция для вычисления индекса Хирша
+def hindex(citations):
+    citations = quicksort(citations)  # Сортировка массива цитирований
+    n = len(citations)
+    h = 0
+    for i in range(n, 0, -1):
+        if citations[n - i] >= i:
+            h = i
+            break
+    return h
+
+# Вычисляем индекс Хирша
+h_index = hindex(citations)
+d = open('output.txt', 'w')
+d.write(str(h_index))
+d.close()
+
+print(f'Время выолнения:{time.time()-start}')
+print(f'Затраты памяти:',process.memory_info().rss/(1024*1024),'Мбайт')
+
